@@ -8,6 +8,10 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 import time
 
+
+
+# Fixed Inputs
+
 FORM_LINK = 'https://docs.google.com/forms/d/e/1FAIpQLSeypVEDdp80hocyqu8fkl6jZjW8Jn0_jLnLM0zyI3vQ3qGq7w/viewform?usp=sf_link'
 URL = 'https://www.zillow.com/homes/for_sale/?utm_medium=cpc&utm_source=google&utm_content=18806865550|142739413803|aud-455958732640:kwd-570802407|603457706088|&semQue=null&gclid=Cj0KCQiA1NebBhDDARIsAANiDD2N47UyCRen-B68fsVVnbVyMpRe9TEvPwYvbFwOYgXsalplmly8rKMaAtetEALw_wcB&searchQueryState=%7B%22mapBounds%22%3A%7B%22west%22%3A-84.44240062890626%2C%22east%22%3A-83.93153637109376%2C%22south%22%3A33.575570762774746%2C%22north%22%3A34.0098261564241%7D%2C%22isMapVisible%22%3Atrue%2C%22filterState%22%3A%7B%22sort%22%3A%7B%22value%22%3A%22days%22%7D%2C%22ah%22%3A%7B%22value%22%3Atrue%7D%2C%22price%22%3A%7B%22max%22%3A150000%7D%2C%22mp%22%3A%7B%22max%22%3A740%7D%2C%22beds%22%3A%7B%22min%22%3A3%7D%7D%2C%22isListVisible%22%3Atrue%2C%22mapZoom%22%3A11%2C%22pagination%22%3A%7B%7D%7D'
 header = {
@@ -16,6 +20,10 @@ header = {
 }
 PATH = '/Users/a/Library/Mobile Documents/com~apple~CloudDocs/Development/chromedriver'
 
+
+
+# Initializing BeautifulSoup
+
 response = requests.get(headers=header, url=URL)
 response.raise_for_status()
 zillow_text = response.text
@@ -23,6 +31,10 @@ soup = BeautifulSoup(zillow_text, 'html.parser')
 ADDRESS = []
 LINK = []
 PRICE = []
+
+
+
+# Getting  Zillow information 
 
 zillow_link = soup.select('article div div a[tabindex="0"]', class_='lhIXlm', href=True)
 for link in zillow_link:
@@ -40,6 +52,9 @@ listings = soup.select('article div div div span[data-test="property-card-price"
 for listing in listings:
     PRICE.append(listing.getText())
 
+    
+    
+# Using Object Oriented Programming for Selenium 
 
 class Form:
 
@@ -63,6 +78,9 @@ class Form:
         time.sleep(1)
         self.driver.find_element('xpath', '//*[@id="mG61Hd"]/div[2]/div/div[3]/div[1]/div[1]/div/span/span').click()
 
+        
+        
+# Initializing Selenium to fill in rows 
 
 fill_form = Form()
 for n in range(0, len(LINK)-1):
